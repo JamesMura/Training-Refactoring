@@ -1,58 +1,50 @@
 package problem2;
 
-public class Direction {
-    private final char direction;
-
-    public Direction(char direction) {
-        this.direction = direction;
-    }
-
-    public Direction turnRight() {
-        switch (direction) {
-            case 'N':
-                return new Direction('E');
-            case 'S':
-                return new Direction('W');
-            case 'E':
-                return new Direction('S');
-            case 'W':
-                return new Direction('N');
-            default:
-                throw new IllegalArgumentException();
+public enum Direction {
+    NORTH {
+        @Override
+        public Direction turnRight() {
+            return EAST;
         }
-    }
 
-    public Direction turnLeft() {
-        switch (direction) {
-            case 'N':
-                return new Direction('W');
-            case 'S':
-                return new Direction('E');
-            case 'E':
-                return new Direction('N');
-            case 'W':
-                return new Direction('S');
-            default:
-                throw new IllegalArgumentException();
+        @Override
+        public Direction turnLeft() {
+            return WEST;
         }
-    }
+    }, SOUTH {
+        @Override
+        public Direction turnRight() {
+            return WEST;
+        }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        @Override
+        public Direction turnLeft() {
+            return EAST;
+        }
+    }, EAST {
+        @Override
+        public Direction turnRight() {
+            return SOUTH;
+        }
 
-        Direction direction1 = (Direction) o;
-        return direction == direction1.direction;
-    }
+        @Override
+        public Direction turnLeft() {
+            return NORTH;
+        }
+    }, WEST {
+        @Override
+        public Direction turnRight() {
+            return NORTH;
+        }
 
-    @Override
-    public int hashCode() {
-        return (int) direction;
-    }
+        @Override
+        public Direction turnLeft() {
+            return SOUTH;
+        }
+    };
 
-    @Override
-    public String toString() {
-        return "DirectionSolved{direction=" + direction + '}';
-    }
+
+    public abstract Direction turnRight();
+
+    public abstract Direction turnLeft();
 }
